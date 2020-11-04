@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD/EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/hibernate-mapping">
+
+    <class name="hibernate.model.Engine" table="engines">
+    <!--    name - относится к названию полей в классе и должны совпадать
+            column - относится к полям базы данных и должны совпадать    -->
+        <id name = "id" type = "int" column = "id">
+            <generator class="identity"/>
+        </id>
+
+        <property name="name" column="name"/>
+        <property name="power" column="power"/>
+        <property name="carMark" column="car_mark"/>
+
+        <!--    Прикрепляем машины к двигателю
+           name="cars" table="cars" (масив) из какой коллекции будем генирировать
+           cascade="all" - говорим все что сделали с данным мотором
+           - то сразу должно отображаться и на всех машинах привязаных к этому классу
+           fetch="join" - чтобы не делать много запросов    -->
+
+        <set name="cars" table="cars" cascade="all" fetch="join">
+            <!-- указываем по каким полям будем соединяться
+            1. column="mark" относится к таблице cars.
+            2. property-ref="carMark" это имя переменной на полях класса Engine.    -->
+            <key column="mark" property-ref="carMark"/>
+            <one-to-many class="hibernate.model.Car" />
+        </set>
+
+    </class>
+</hibernate-mapping>
