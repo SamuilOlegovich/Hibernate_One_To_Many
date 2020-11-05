@@ -1,18 +1,20 @@
 package hibernate;
 
 
-import hibernate.dao.DAO;
-import hibernate.dao.EngineDAO;
-import hibernate.model.Car;
-import hibernate.model.Engine;
-import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.SessionFactory;
+import hibernate.dao.EngineDAO;
+import hibernate.model.Engine;
+import hibernate.model.Car;
+import hibernate.dao.DAO;
 import java.util.HashSet;
 import java.util.Set;
 
 
+
+
 public class Main {
-    private static Integer idNewCars;
+    private static Integer idNewEngine;
 
     public static void main(String[] args) {
         SessionFactory factory = null;
@@ -22,10 +24,10 @@ public class Main {
             /**
              * Раскоментируя интересующий метод помните что обращение к данным происходит по id.
              * Убедитесь что данные для методов create update и delete существуют.  */
-//            read(dao);
-//            update(dao);
-//            delete(dao);
-//            create(dao);
+            read(dao);
+            update(dao);
+            delete(dao);
+            create(dao);
         } finally {
             if (factory != null) {
                 factory.close();
@@ -71,13 +73,15 @@ public class Main {
         engine.setCars(cars);
 
         carDao.create(engine);
+
+        idNewEngine = engine.getId();
     }
 
 
 
     private static void delete(DAO<Engine, Integer> engineDao) {
-        Engine engine = engineDao.read(1);
+        Engine engine = engineDao.read(idNewEngine);
         engineDao.delete(engine);
-        System.out.println(engineDao.read(1));
+        System.out.println(engineDao.read(idNewEngine));
     }
 }

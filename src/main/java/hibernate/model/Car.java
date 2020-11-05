@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.GenerationType;
 import javax.persistence.*;
-import lombok.*;
+//import lombok.*;
 
 
 @Data                               // анотация выполяет роль замены гетеров и сетерв
